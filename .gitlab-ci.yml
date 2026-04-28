@@ -1,0 +1,42 @@
+
+stages:
+- build
+- test
+
+variables:
+  imagename: orangeimage
+  tag: v1.0.0
+
+image: ubuntu
+build_job:
+  stage: build
+  script:
+    - echo "Learning Variable in Gitlab CI"
+    - echo "the image name is $imagename and the tag is $tag"
+    - echo "Calling Variabled defined in the GItlab Variable section"
+    - echo " the dbpassword is $dbpasswd"
+    - echo " visible name  is $visible1"
+    - echo "CI_PROJECT_NAME is $CI_PROJECT_NAME"
+    - mkdir orange
+    - touch orange/build.txt
+    - cat /etc/os-release > orange/build.txt
+    - hostname >> orange/build.txt
+    - date >> orange/build.txt
+    - cat orange/build.txt
+  artifacts:
+    paths:
+      - orange
+    expire_in: 1 days
+
+test_job:
+  stage: test
+  script:
+    - echo "This is the test stage"
+    - cat orange/build.txt
+    - echo $CI
+    - echo $CI_JOB_NAME
+    - echo $CI_JOB_STAGE
+    - echo $CI_PROJECT_NAME
+    - echo $CI_PIPELINE_ID
+    - echo $CI_RUNNER_ID
+    - hostname
