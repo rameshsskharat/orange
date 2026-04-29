@@ -1,0 +1,12 @@
+stages:
+- build
+build:
+  stage: build
+  script:
+    - echo "Building the project..."
+    - sh 1.sh
+  parallel: 
+    matrix:
+      - os: ["ubuntu", "alpine"]
+        version: ["24", "26"]
+  
