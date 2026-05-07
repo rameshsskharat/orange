@@ -1,0 +1,32 @@
+stages:
+  - build
+  - test
+  # define one job
+create_folder: # job1 in stage build
+  image: alpine # linux OS
+  stage: build
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "master"'
+    when: manual
+  script:
+  - echo "creating folder..."
+  - mkdir vadapav
+  - touch vadapav/{1..100}.txt
+  - echo "100 files Created"
+
+  artifacts:
+    paths: 
+    - vadapav/
+  
+
+list_folder: # job2 in stage1
+  stage: build
+  needs:
+    - create_folder
+  script:
+  - echo "checking files"
+  - ls -l vadapav/
+  rules:
+  - if: '$CI_COMMIT_BRANCH == "master"'
+    when: always
+  
