@@ -1,0 +1,41 @@
+
+==========================================================
+kubectl create namespace gitlab-runner-nathan
+
+==========================================================
+values.yaml
+
+gitlabUrl: https://gitlab.com/   # or your self-hosted GitLab URL
+
+runnerRegistrationToken: "glrt-F-FUK_3CV7MFZN4aUJpSaWM6MQpvOjEKcDoxY2RqYWUKdDozCnU6Nm0zNWEc.01.1o0ot4a63"   # change token
+
+runners:
+  kubernetes:
+    serviceAccount: gitlab-runner
+  config: |
+    [[runners]]
+      name = "k8s-onprem-runner"  # change name
+      url = "https://gitlab.com/"
+      token = "glrt-F-FUK_3CV7MFZN4aUJpSaWM6MQpvOjEKcDoxY2RqYWUKdDozCnU6Nm0zNWEc.01.1o0ot4a63"  # change token
+      executor = "kubernetes"
+
+
+      [runners.kubernetes]
+        namespace = "gitlab-runner"   # change namespace gitlab-runner-nathan
+        image = "ubuntu:22.04"
+        privileged = true
+
+      [runners.cache]
+        Type = "s3"
+        Path = "runner"
+        Shared = true
+==========================================================================
+
+ helm install gitlab-runner gitlab/gitlab-runner  --namespace gitlab-runner-nathan   -f values.yaml  # change namespace
+
+==========================================================================
+kubectl get pods -n gitlab-runner-nathan
+
+=================================================
+kubectl create clusterrolebinding gitlab-runner-admin   --clusterrole=cluster-admin   --serviceaccount=gitlab-runner-nathan:default
+=================================================
