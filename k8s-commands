@@ -1,0 +1,33 @@
+270  kubectl create deployment app1 --image=httpd -n mod
+  271  kubectl get deploy -n mod
+  272  kubectl get pods -n mod
+  273  kubectl get pods -n mod -o wide
+  274  kubectl delete pod p1 -n mod
+  275  kubectl delete pod app1-6b565f6c85-rpzxw -n mod
+  276  kubectl delete pod app1-6b565f6c85-7vw6c -n mod
+  277  kubectl scale deployment/app1 --replicas=3 -n mod
+  278  kubectl scale deployment/app1 --replicas=10 -n mod
+  279  kubectl scale deployment/app1 --replicas=4 -n mod
+  280  kubectl scale deployment/app1 --replicas=0 -n mod
+  281  kubectl scale deployment/app1 --replicas=2 -n mod
+  282  clear
+  283  history
+  284  clear
+  285  vi d1.yaml
+  286  kubectl apply -f d1.yaml
+  287  vi d1.yaml
+  288  kubectl apply -f d1.yaml
+  289  kubectl delete  -f d1.yaml
+  290  ls
+  291  cat d1.yaml
+  292  kubectl delete deployment app1 -n mod
+  293  vi m1.yaml
+  294  kubectl apply -f m1.yaml
+  295  clear
+  296  kubectl run p11 --image=httpd -n mod --dry-run=client -o yaml
+  297  kubectl run p11 --image=httpd -n mod --dry-run=client -o json
+  298  kubectl run p11 --image=httpd -n mod --dry-run=client -o json > p11.json
+  299  kubectl apply -f p11.json
+  300  kubectl create deployment m2 --image=httpd --replicas=5 -n mod --dry-run=client -o yaml
+  301  kubectl create deployment m2 --image=httpd --replicas=5 -n mod --dry-run=client -o yaml > m2.yaml
+  302  kubectl apply -f m2.yaml
